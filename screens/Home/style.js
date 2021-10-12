@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: SIZES.h1,
-        fontFamily: 'Inter_900Black',
+        // fontFamily: 'Inter_900Black',
         color: COLORS.white,
         marginLeft: 15,
         marginTop: 15,

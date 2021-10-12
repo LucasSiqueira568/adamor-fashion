@@ -1,18 +1,43 @@
 import React from "react";
-import { View, Text, TextInput, ScrollView } from "react-native";
-import { useFonts, Inter_900Black } from '@expo-google-fonts/inter';
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  FlatList,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 
 import { COLORS } from "../../src/container/theme";
 import styles from "./style";
 
 import Card from "../utils/Card";
 import Category from "../utils/Category";
-import CardProduct from "../utils/CardProduct";
+import products from "../../data/products";
 
-export default function Home() {
-  let [fontsLoaded] = useFonts({
-    Inter_900Black,
-  });
+export default function Home({ navigation }) {
+  const CardProduct = ({ product }) => {
+    return (
+      <TouchableOpacity
+        style={{
+          margin: 15,
+        }}
+        onPress={() => navigation.navigate("Details", product)}
+      >
+        <Image style={{
+          width: 120,
+          height: 100
+        }} source={product.img} resizeMode="cover" />
+        <View>
+          <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>
+            R$ 119,90
+          </Text>
+          <Text style={{ color: "white", fontSize: 14 }}>Nike Air Max 90</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
   return (
     <ScrollView style={styles.container}>
       {/* Header da aplicação */}
@@ -92,39 +117,23 @@ export default function Home() {
           alignItems: "center",
         }}
       >
-        <CardProduct url={require("../../src/assets/tenis-banner.png")} />
-        <CardProduct url={require("../../src/assets/tenis-banner-2.png")} />
-        <CardProduct url={require("../../src/assets/tenis-banner-3.png")} />
-        <CardProduct url={require("../../src/assets/tenis-banner-4.png")} />
-        <CardProduct url={require("../../src/assets/tenis-banner-5.png")} />
-        <CardProduct url={require("../../src/assets/tenis-banner-6.png")} />
-      </View>
-
-      <Text
-        style={{
-          fontSize: 18,
-          color: COLORS.white,
-          marginLeft: 15,
-          marginTop: 30,
-          marginBottom: 15,
-          fontWeight: "bold",
-        }}
-      >
-        Camisas
-      </Text>
-      <View
-        style={{
-          flexDirection: "row",
-          flexWrap: "wrap",
-          alignItems: "center",
-        }}
-      >
-        <CardProduct url={require("../../src/assets/camisa-1.png")} />
-        <CardProduct url={require("../../src/assets/camisa-2.png")} />
-        <CardProduct url={require("../../src/assets/camisa-3.png")} />
-        <CardProduct url={require("../../src/assets/camisa-4.png")} />
-        <CardProduct url={require("../../src/assets/camisa-5.png")} />
-        <CardProduct url={require("../../src/assets/camisa-6.png")} />
+        <FlatList
+          columnWrapperStyle={{ justifyContent: "space-between" }}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            marginTop: 10,
+            marginLeft: 15,
+            marginBottom: 20,
+            paddingBottom: 50,
+            justifyContent: 'center'
+          }}
+          numColumns={2}
+          data={products}
+          renderItem={({ item }) => {
+            return <CardProduct product={item} />;
+          }}
+          keyExtractor={item => item.id}
+        />
       </View>
     </ScrollView>
   );
