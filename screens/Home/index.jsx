@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  StatusBar,
 } from "react-native";
 
 import { COLORS } from "../../src/container/theme";
@@ -25,25 +26,34 @@ export default function Home({ navigation }) {
         }}
         onPress={() => navigation.navigate("Details", product)}
       >
-        <Image style={{
-          width: 120,
-          height: 100
-        }} source={product.img} resizeMode="cover" />
+        <Image
+          style={{
+            width: 120,
+            height: 100,
+          }}
+          source={product.img}
+          resizeMode="cover"
+        />
         <View>
           <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>
-            R$ 119,90
+            R$ {product.price}
           </Text>
-          <Text style={{ color: "white", fontSize: 14 }}>Nike Air Max 90</Text>
+          <Text style={{ color: "white", fontSize: 14 }}>{product.name}</Text>
         </View>
       </TouchableOpacity>
     );
   };
   return (
     <ScrollView style={styles.container}>
+      <StatusBar backgroundColor={COLORS.primary} />
       {/* Header da aplicação */}
       <Text style={styles.title}>Fashion</Text>
       <View style={styles.header}>
-        <TextInput style={styles.input} placeholder="Digite sua pesquisa..." />
+        <TextInput
+          style={styles.input}
+          placeholder="Digite sua pesquisa..."
+          placeholderTextColor={COLORS.grey}
+        />
       </View>
       {/* Cards dos produtos em destaque */}
       <View
@@ -125,14 +135,14 @@ export default function Home({ navigation }) {
             marginLeft: 15,
             marginBottom: 20,
             paddingBottom: 50,
-            justifyContent: 'center'
+            justifyContent: "center",
           }}
           numColumns={2}
           data={products}
           renderItem={({ item }) => {
             return <CardProduct product={item} />;
           }}
-          keyExtractor={item => item.id}
+          keyExtractor={(item) => item.id}
         />
       </View>
     </ScrollView>

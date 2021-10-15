@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.primary,
-        alignContent: "center",
+        // alignContent: "center",
     },
     header: {
         alignItems: "center",
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 20,
         backgroundColor: COLORS.background,
+        paddingLeft: 15,
         color: COLORS.white
     }
 

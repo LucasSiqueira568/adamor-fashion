@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
+import { SimpleLineIcons, Ionicons } from "@expo/vector-icons/";
 import styles from "./style";
 import { COLORS } from "../../src/container/theme";
 
 export default function Details({ navigation, route }) {
   const [icon, setIcon] = useState(true);
   const product = route.params;
+
+  const sizes = ["38", "39", "41", "42", "43", "44"];
   return (
     <View style={styles.container}>
       <View
@@ -17,13 +19,18 @@ export default function Details({ navigation, route }) {
           marginTop: 10,
         }}
       >
-        <Ionicons
-          style={{ marginLeft: 15 }}
-          name="arrow-back"
-          size={35}
-          color={COLORS.white}
+        <TouchableOpacity
+          style={{ flexDirection: "row", alignItems: "center" }}
           onPress={() => navigation.goBack()}
-        />
+        >
+          <SimpleLineIcons
+            style={{ marginLeft: 15 }}
+            name="arrow-left"
+            size={20}
+            color={COLORS.white}
+          />
+          <Text style={{ color: COLORS.white, marginLeft: 3 }}>Voltar</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => setIcon(!icon)}
@@ -74,37 +81,40 @@ export default function Details({ navigation, route }) {
           {product.description}
         </Text>
 
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: 15,
-            width: "100%",
-            justifyContent: "space-between",
+        <ScrollView
+          horizontal
+          contentContainerStyle={{
+            marginTop: 10,
           }}
         >
-          <TouchableOpacity
-            style={{
-              borderWidth: 1,
-              borderColor: COLORS.white,
-              width: 60,
-              height: 40,
-              borderRadius: 30,
-              justifyContent: "center",
-              alignItems: "center",
-              marginLeft: 15,
-              marginTop: 15,
-            }}
-          >
-            <Text
-              style={{
-                color: COLORS.white,
-                fontSize: 19,
-              }}
-            >
-              39
-            </Text>
-          </TouchableOpacity>
-        </View>
+          {sizes.map((item) => {
+            return (
+              <TouchableOpacity
+                style={{
+                  borderWidth: 1,
+                  borderColor: COLORS.white,
+                  width: 60,
+                  height: 40,
+                  borderRadius: 30,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginLeft: 15,
+                  marginRight: 15,
+                  marginTop: 15,
+                }}
+              >
+                <Text
+                  style={{
+                    color: COLORS.white,
+                    fontSize: 19,
+                  }}
+                >
+                  {item}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
 
         <View
           style={{
@@ -113,7 +123,6 @@ export default function Details({ navigation, route }) {
             justifyContent: "space-between",
             alignItems: "center",
             height: "20%",
-            //   backgroundColor: 'red'
           }}
         >
           <Text
@@ -135,7 +144,7 @@ export default function Details({ navigation, route }) {
               borderRadius: 15,
               justifyContent: "center",
               alignItems: "center",
-              marginRight: 15
+              marginRight: 15,
             }}
           >
             <Text
