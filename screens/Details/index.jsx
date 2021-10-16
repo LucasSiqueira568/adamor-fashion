@@ -1,6 +1,14 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
-import { SimpleLineIcons, Ionicons } from "@expo/vector-icons/";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Alert,
+  FlatList,
+} from "react-native";
+import { SimpleLineIcons, Ionicons, Feather } from "@expo/vector-icons/";
 import styles from "./style";
 import { COLORS } from "../../src/container/theme";
 
@@ -39,7 +47,7 @@ export default function Details({ navigation, route }) {
           {icon ? (
             <Ionicons name="heart" size={35} color="white" />
           ) : (
-            <Ionicons name="heart-half" size={35} color="white" />
+            <Feather name="heart" size={35} color="white" />
           )}
         </TouchableOpacity>
       </View>
@@ -80,49 +88,50 @@ export default function Details({ navigation, route }) {
         >
           {product.description}
         </Text>
-
-        <ScrollView
-          horizontal
-          contentContainerStyle={{
-            marginTop: 10,
-          }}
-        >
-          {sizes.map((item) => {
-            return (
-              <TouchableOpacity
-                style={{
-                  borderWidth: 1,
-                  borderColor: COLORS.white,
-                  width: 60,
-                  height: 40,
-                  borderRadius: 30,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginLeft: 15,
-                  marginRight: 15,
-                  marginTop: 15,
-                }}
-              >
-                <Text
+        <View>
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={sizes}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
                   style={{
-                    color: COLORS.white,
-                    fontSize: 19,
+                    borderWidth: 1,
+                    borderColor: COLORS.white,
+                    width: 60,
+                    height: 40,
+                    borderRadius: 30,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginLeft: 15,
+                    marginRight: 15,
+                    marginTop: 15,
                   }}
                 >
-                  {item}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      fontSize: 19,
+                    }}
+                  >
+                    {item}
+                  </Text>
+                </TouchableOpacity>
+              );
+            }}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
 
         <View
           style={{
-            marginTop: 20,
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            height: "20%",
+            height: 100,
+            marginTop: 15,
+            paddingTop: 50,
           }}
         >
           <Text
@@ -137,6 +146,7 @@ export default function Details({ navigation, route }) {
           </Text>
 
           <TouchableOpacity
+            onPress={() => Alert.alert("Clicou")}
             style={{
               backgroundColor: COLORS.white,
               width: 160,
